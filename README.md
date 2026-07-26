@@ -123,7 +123,11 @@ python -m http.server 8000
 | Safari (macOS) | 14+ | ✅ 完整支持（推荐使用，女声最佳） |
 | Safari (iOS) | 14+ | ✅ 完整支持（首次播放声音需点击屏幕） |
 | Firefox | 90+ | ⚠️ 语音功能依赖系统语音包，效果可能不如 Chrome/Safari |
+| 安卓 Chrome | 90+ | ⚠️ **发音受限**：国内网络下 Web Speech 默认走 Google 在线 TTS，会静默失败；代码已加超时检测 + Toast 提示。建议换用 iOS Safari 或 macOS Safari 获得最佳体验 |
+| 安卓 Edge / Firefox | - | 同上，受限 |
 | 微信内置浏览器 | - | ⚠️ 受限，建议「在浏览器中打开」 |
+
+> 💡 **关于发音的说明**：纯静态 HTML 用的是浏览器内置 Web Speech API，**没有任何后端 TTS 服务**。iOS/macOS Safari 自带本地英语语音（macOS 的 Samantha 是最甜美的女声）；安卓 Chrome 国内网络下会因 Google TTS 连不上而静默失败。代码会在 1.5 秒内检测到这种情况并给出 Toast 提示，但**声音不会变出来**——这是浏览器+网络层面的限制，纯前端无法绕过。如果需要安卓上 100% 能发音，需要加后端调用国内 TTS（讯飞/百度/腾讯），但目前本项目不包含这个后端。
 
 ---
 

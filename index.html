@@ -204,13 +204,19 @@ img{max-width:100%;display:block}
   display:flex;align-items:center;gap:18px;
   box-shadow:var(--shadow-card);
   animation:popIn .3s ease;
+  flex-wrap:wrap;
 }
-.letter-detail .big-letter{font-size:84px;font-weight:900;color:var(--c-green-1);line-height:1;min-width:140px;text-align:center}
-.letter-detail .big-letter .lower{display:block;font-size:42px;color:var(--c-green-2);margin-top:4px}
-.letter-detail .info{flex:1}
-.letter-detail .word{font-size:24px;font-weight:700;margin-bottom:4px}
-.letter-detail .cn{color:#666;font-size:15px;margin-bottom:8px}
-.letter-detail .emoji-big{font-size:56px;display:block;margin-bottom:6px}
+.letter-detail .big-letter{
+  font-size:clamp(64px,12vw,84px);font-weight:900;
+  color:var(--c-green-1);line-height:1;
+  flex:0 0 auto;text-align:center;
+  padding:0 8px;
+}
+.letter-detail .big-letter .lower{display:block;font-size:clamp(32px,6vw,42px);color:var(--c-green-2);margin-top:4px}
+.letter-detail .info{flex:1 1 200px;min-width:0}
+.letter-detail .word{font-size:clamp(20px,5vw,26px);font-weight:700;margin-bottom:4px;word-break:break-word}
+.letter-detail .cn{color:#666;font-size:clamp(14px,3.6vw,16px);margin-bottom:8px}
+.letter-detail .emoji-big{font-size:clamp(44px,10vw,56px);display:block;margin-bottom:6px}
 
 .nav-row{display:flex;gap:8px;margin-top:12px}
 
@@ -222,26 +228,34 @@ img{max-width:100%;display:block}
 }
 .word-card{
   background:var(--c-orange-3);border-radius:var(--r-card);
-  padding:12px;text-align:center;cursor:pointer;
+  padding:12px 8px;text-align:center;cursor:pointer;
   transition:all .2s;border:2px solid transparent;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  min-width:0;
 }
 .word-card:hover{transform:scale(1.05);border-color:var(--c-orange-2)}
 .word-card.active{background:#fff;border-color:var(--c-orange-2);box-shadow:0 4px 12px rgba(255,111,0,.2)}
-.word-card .emoji{font-size:36px;display:block;margin-bottom:4px}
-.word-card .en{font-weight:700;color:var(--c-orange-1);font-size:15px}
-.word-card .cn{color:#888;font-size:12px;margin-top:2px}
+.word-card .emoji{font-size:36px;line-height:1}
+.word-card .en{
+  font-weight:700;color:var(--c-orange-1);
+  font-size:clamp(13px,3.2vw,15px);
+  word-break:break-word;line-height:1.2;
+  max-width:100%;
+}
+.word-card .cn{color:#888;font-size:clamp(11px,2.8vw,12px);margin-top:2px;word-break:break-word;max-width:100%}
 
 .word-detail-card{
   background:#fff;border-radius:var(--r-card);padding:20px;
   box-shadow:var(--shadow-card);
   display:flex;align-items:center;gap:16px;
   animation:popIn .3s ease;
+  flex-wrap:wrap;
 }
-.word-detail-card .emoji-big{font-size:80px}
-.word-detail-card .info{flex:1}
-.word-detail-card .en{font-size:26px;font-weight:700;color:var(--c-orange-1)}
-.word-detail-card .cn{color:#666;font-size:15px;margin:4px 0}
-.word-detail-card .phonetic{color:#999;font-size:14px;font-style:italic}
+.word-detail-card .emoji-big{font-size:clamp(56px,12vw,80px);flex:0 0 auto;line-height:1}
+.word-detail-card .info{flex:1 1 200px;min-width:0}
+.word-detail-card .en{font-size:clamp(22px,5.5vw,28px);font-weight:700;color:var(--c-orange-1);word-break:break-word}
+.word-detail-card .cn{color:#666;font-size:clamp(14px,3.6vw,16px);margin:4px 0}
+.word-detail-card .phonetic{color:#999;font-size:clamp(13px,3.2vw,14px);font-style:italic;word-break:break-word}
 
 .mark-learned-btn{
   margin-top:10px;padding:6px 14px;border-radius:var(--r-pill);
@@ -260,9 +274,9 @@ img{max-width:100%;display:block}
   box-shadow:var(--shadow-card);
   display:flex;align-items:center;gap:12px;
 }
-.sentence-item .text{flex:1}
-.sentence-item .en{font-size:17px;font-weight:600;color:var(--c-blue-1);margin-bottom:2px}
-.sentence-item .cn{color:#666;font-size:14px}
+.sentence-item .text{flex:1 1 auto;min-width:0}
+.sentence-item .en{font-size:clamp(15px,4vw,18px);font-weight:600;color:var(--c-blue-1);margin-bottom:2px;word-break:break-word}
+.sentence-item .cn{color:#666;font-size:clamp(13px,3.4vw,14px);word-break:break-word}
 
 /* ==========================================================
    Module 4: Listening
@@ -293,11 +307,28 @@ img{max-width:100%;display:block}
   cursor:pointer;transition:all .2s;
   display:flex;align-items:center;gap:8px;justify-content:center;
   min-height:60px;
+  text-align:center;
+  word-break:break-word;
+  overflow-wrap:anywhere;
 }
 .listen-option:hover:not(:disabled){transform:scale(1.05);border-color:var(--c-purple-1)}
 .listen-option.correct{background:var(--c-ok-bg);border-color:var(--c-ok);color:var(--c-ok)}
 .listen-option.wrong{background:var(--c-err-bg);border-color:var(--c-err);color:var(--c-err);animation:shake .4s}
 .listen-option:disabled{cursor:not-allowed}
+
+/* 句子选项专用：单列、长句可换行、占满宽度 */
+.sentence-options{
+  display:flex;flex-direction:column;gap:10px;
+  margin-top:14px;
+}
+.sentence-options .listen-option{
+  width:100%;
+  font-size:17px;
+  padding:16px 14px;
+  min-height:54px;
+  white-space:normal;
+  line-height:1.4;
+}
 
 /* ==========================================================
    Module 5: Games
@@ -311,18 +342,44 @@ img{max-width:100%;display:block}
 .memory-card{
   aspect-ratio:1;border-radius:var(--r-cell);
   background:linear-gradient(135deg,var(--c-purple-1),#ba68c8);
-  color:#fff;font-size:28px;
+  color:#fff;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:transform .3s;
+  cursor:pointer;
   position:relative;
   font-weight:700;
+  font-size:24px;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .15s;
+  user-select:none;
 }
-.memory-card .face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:4px;backface-visibility:hidden;border-radius:var(--r-cell);text-align:center;font-size:14px;line-height:1.2}
-.memory-card .face.back{background:linear-gradient(135deg,var(--c-purple-1),#ba68c8);transform:rotateY(0)}
-.memory-card .face.front{background:#fff;color:#333;transform:rotateY(180deg);font-size:13px;overflow:hidden}
-.memory-card.flipped{transform:rotateY(180deg)}
-.memory-card.matched{background:var(--c-ok-bg);color:var(--c-ok);transform:scale(.95)}
-.memory-card.matched .face.back{background:var(--c-ok-bg);color:var(--c-ok)}
+.memory-card:active{transform:scale(.95)}
+.memory-card .card-face{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r-cell);
+  padding:6px;
+  text-align:center;
+  word-break:break-word;
+  line-height:1.1;
+}
+.memory-card .card-face.back{font-size:30px}
+.memory-card .card-face.front{
+  background:#fff;color:#333;
+  font-size:14px;
+}
+.memory-card.flipped{
+  background:#fff;
+  box-shadow:0 4px 12px rgba(123,31,162,.2);
+}
+.memory-card.matched{
+  background:var(--c-ok-bg);
+  animation:matchedPop .4s;
+}
+.memory-card.matched .card-face.front{
+  background:var(--c-ok-bg);color:var(--c-ok);
+}
+.memory-card.wrong-shake{animation:shake .4s}
+@keyframes matchedPop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 
 /* Whack */
 .whack-area{text-align:center}
@@ -341,29 +398,63 @@ img{max-width:100%;display:block}
   margin-bottom:12px;
 }
 .whack-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:1fr;
+  gap:10px;
   max-width:420px;margin:0 auto;
 }
 .whack-hole{
   aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle,#8d6e63 0%,#5d4037 100%);
+  background:radial-gradient(circle,#a1887f 0%,#5d4037 70%,#3e2723 100%);
   position:relative;cursor:pointer;
+  overflow:visible;
   display:flex;align-items:center;justify-content:center;
-  overflow:hidden;min-height:90px;
-  transition:transform .1s;
+  min-height:90px;
+  transition:transform .12s,box-shadow .12s;
+  box-shadow:inset 0 -4px 8px rgba(0,0,0,.3);
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
 }
-.whack-hole:active{transform:scale(.95)}
+.whack-hole:active{transform:scale(.96)}
 .whack-hole .mole{
-  position:absolute;bottom:0;
-  background:#fff;border-radius:12px 12px 0 0;
-  padding:8px 4px 4px;font-weight:700;font-size:18px;color:var(--c-red-1);
-  width:90%;text-align:center;
-  transition:transform .2s,opacity .2s;
-  transform:translateY(100%);opacity:0;
+  position:absolute;
+  left:50%;bottom:0;
+  transform:translate(-50%,110%);
+  background:linear-gradient(180deg,#fff 0%,#fff3e0 100%);
+  border:3px solid var(--c-red-1);
+  border-radius:14px 14px 4px 4px;
+  padding:8px 6px 6px;
+  font-weight:700;font-size:18px;color:var(--c-red-1);
+  min-width:80%;
+  text-align:center;
+  box-shadow:0 4px 8px rgba(0,0,0,.2);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;
+  opacity:0;
+  pointer-events:none;
+  white-space:nowrap;
 }
-.whack-hole.show .mole{transform:translateY(15%);opacity:1}
-.whack-hole.show.correct-hit{background:radial-gradient(circle,#81c784,#43a047)}
-.whack-hole.show.wrong-hit{background:radial-gradient(circle,#e57373,#c62828)}
+.whack-hole.show .mole{transform:translate(-50%,20%);opacity:1}
+.whack-hole.target-hit .mole{
+  background:linear-gradient(180deg,#c8e6c9,#a5d6a7);
+  border-color:#2e7d32;color:#2e7d32;
+}
+.whack-hole .floater{
+  position:absolute;left:50%;top:30%;
+  transform:translate(-50%,0);
+  font-weight:900;font-size:28px;
+  pointer-events:none;
+  opacity:0;
+  text-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.whack-hole .floater.show{animation:floatUp .9s ease-out forwards}
+.whack-hole .floater.plus{color:#43a047}
+.whack-hole .floater.minus{color:#c62828}
+@keyframes floatUp{
+  0%{opacity:1;transform:translate(-50%,0)}
+  100%{opacity:0;transform:translate(-50%,-60px)}
+}
+.whack-hole.shake{animation:shake .4s}
 
 /* Challenge */
 .challenge-hud{
@@ -427,6 +518,44 @@ img{max-width:100%;display:block}
 .order-piece:hover{transform:scale(1.1)}
 .order-piece:disabled{opacity:.3;cursor:not-allowed;transform:none}
 
+/* 单词/句子排序专用：自适应宽度，能装下 "evening" "watermelon" 这种长词 */
+.word-order-slots{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  padding:14px 10px;background:var(--c-green-3);
+  border-radius:var(--r-card);min-height:64px;
+  margin-bottom:12px;
+}
+.word-order-slot{
+  min-width:48px;height:48px;
+  padding:0 10px;
+  border-radius:12px;
+  background:#fff;border:2px dashed #bbb;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:18px;color:var(--c-green-1);
+  text-align:center;
+  transition:all .2s;
+}
+.word-order-slot.filled{border-style:solid;border-color:var(--c-green-2);background:#fff}
+.word-order-slot:hover:not(:empty){background:var(--c-green-3)}
+.word-order-bank{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  padding:14px 10px;background:#fff;border-radius:var(--r-card);
+  margin-bottom:14px;
+}
+.word-order-piece{
+  min-width:48px;height:48px;
+  padding:0 12px;
+  border-radius:12px;
+  background:var(--c-green-2);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:18px;cursor:pointer;
+  transition:all .15s;
+  border:2px solid transparent;
+}
+.word-order-piece:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 8px rgba(67,160,71,.3)}
+.word-order-piece:active{transform:scale(.95)}
+.word-order-piece:disabled{opacity:.25;cursor:not-allowed;transform:none;background:#aaa;border-color:#aaa}
+
 /* Letter find grid */
 .find-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
@@ -456,12 +585,12 @@ img{max-width:100%;display:block}
 
 /* Spell game */
 .spell-display{
-  text-align:center;padding:18px;
+  text-align:center;padding:18px 12px;
   background:var(--c-orange-3);border-radius:var(--r-card);
   margin-bottom:12px;
 }
-.spell-display .emoji{font-size:64px;display:block}
-.spell-display .cn{color:#666;font-size:16px;margin-top:4px}
+.spell-display .emoji{font-size:clamp(48px,12vw,64px);display:block;line-height:1}
+.spell-display .cn{color:#666;font-size:clamp(14px,3.6vw,16px);margin-top:4px}
 .spell-slots{
   display:flex;gap:4px;justify-content:center;flex-wrap:wrap;
   padding:14px;background:#fff;border-radius:var(--r-card);
@@ -474,6 +603,10 @@ img{max-width:100%;display:block}
   font-weight:700;font-size:20px;color:var(--c-orange-1);
 }
 .spell-slot.filled{border-color:var(--c-orange-2);background:#fff3e0}
+.spell-slot.spell-space{
+  background:transparent;border-color:transparent;border-bottom:2px dotted #bbb;
+  color:#999;font-weight:400;letter-spacing:0;
+}
 .spell-keyboard{
   display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
   padding:12px;background:#f5f5f5;border-radius:var(--r-card);
@@ -492,6 +625,39 @@ img{max-width:100%;display:block}
   width:auto;padding:0 14px;font-size:14px;
   background:#eee;color:#666;
 }
+.spell-key.spell-action{
+  background:#f5f5f5;color:#555;border-color:#ddd;
+}
+.spell-key.spell-action:hover:not(:disabled){background:#e0e0e0;border-color:#bbb}
+.spell-key.spell-skip{background:var(--c-blue-1);color:#fff;border-color:var(--c-blue-1)}
+.spell-key.spell-skip:hover{background:#0d47a1}
+
+/* 拼写工具栏：⌫ / 清除 / ⏭ 三个按钮横排，不挤压不换行 */
+.spell-toolbar{
+  display:flex;gap:8px;justify-content:center;
+  margin-top:10px;flex-wrap:wrap;
+}
+.spell-toolbar .spell-key{
+  width:auto;height:44px;
+  padding:0 16px;
+  font-size:20px;
+  font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:4px;
+  white-space:nowrap;
+}
+.spell-toolbar .spell-key.spell-action{
+  background:#fafafa;color:#555;border-color:#e0e0e0;
+}
+.spell-toolbar .spell-key.spell-action:hover:not(:disabled){
+  background:#f0f0f0;border-color:#bbb;
+}
+.spell-toolbar .spell-key.spell-skip{
+  background:var(--c-blue-1);color:#fff;border-color:var(--c-blue-1);
+}
+.spell-toolbar .spell-key.spell-skip:hover{background:#0d47a1}
+.spell-toolbar .spell-key .icon{font-size:20px;line-height:1}
+.spell-toolbar .spell-key .lbl{font-size:14px}
 
 /* Sentence order: uses slots + bank similar to letter order */
 
@@ -1087,12 +1253,18 @@ function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 /* ==========================================================
    Voice system (Web Speech API)
    ========================================================== */
-function pickFemaleVoice(){
+function pickFemaleVoice(lang){
   if(_cachedFemaleVoice) return _cachedFemaleVoice;
   if(!('speechSynthesis' in window)) return null;
 
   const voices = window.speechSynthesis.getVoices();
   if(!voices || voices.length === 0) return null;
+
+  // 过滤：优先选与请求 lang 同语言的语音
+  const wantLang = (lang || 'en-US').toLowerCase();
+  const sameLang = v => v.lang && v.lang.toLowerCase().startsWith(wantLang.split('-')[0]);
+  const filtered = voices.filter(sameLang);
+  const pool = filtered.length > 0 ? filtered : voices;
 
   // Level 1: exact match known female names
   const femaleNames = [
@@ -1102,28 +1274,46 @@ function pickFemaleVoice(){
     'Alice','Julie','Amy','Emma','Susan','Kate'
   ];
   for(const name of femaleNames){
-    const v = voices.find(v => v.name === name);
+    const v = pool.find(v => v.name === name);
     if(v){ _cachedFemaleVoice = v; return v; }
   }
   // Level 2: includes
   for(const name of femaleNames){
-    const v = voices.find(v => v.name.includes(name));
+    const v = pool.find(v => v.name.includes(name));
     if(v){ _cachedFemaleVoice = v; return v; }
   }
   // Level 3: female / woman keyword
-  const v3 = voices.find(v =>
+  const v3 = pool.find(v =>
     /female|woman|girl/i.test(v.name) && !/male|man|boy/i.test(v.name)
   );
   if(v3){ _cachedFemaleVoice = v3; return v3; }
   // Level 4: exclude known males
   const maleNames = ['Daniel','Alex','Fred','Tom','Google UK English Male','David','Mark','Microsoft Guy'];
-  const enVoices = voices.filter(v => v.lang && v.lang.startsWith('en'));
-  const v4 = enVoices.find(v => !maleNames.some(m => v.name.includes(m)));
+  const v4 = pool.find(v => !maleNames.some(m => v.name.includes(m)));
   if(v4){ _cachedFemaleVoice = v4; return v4; }
   // Fallback
-  const fallback = enVoices[0] || voices[0];
+  const fallback = pool[0];
   if(fallback){ _cachedFemaleVoice = fallback; }
   return fallback;
+}
+
+// 字母名发音表：把单个字母强制 TTS 读成"字母名"，
+// 避免部分 TTS 引擎（尤其 Google en-US）把单字母展开成 "capital A" / "uppercase A"。
+// 用英文单词/短语代替字母本身，TTS 会按英文单词发音，恰好等于字母名发音。
+const LETTER_NAMES = {
+  A:'ay', B:'bee', C:'see', D:'dee', E:'ee', F:'ef', G:'gee',
+  H:'aitch', I:'eye', J:'jay', K:'kay', L:'el', M:'em', N:'en',
+  O:'oh', P:'pee', Q:'cue', R:'ar', S:'ess', T:'tee', U:'you',
+  V:'vee', W:'double you', X:'ex', Y:'why', Z:'zee'
+};
+function speakLetter(ch){
+  const upper = (ch || '').toUpperCase();
+  const word = LETTER_NAMES[upper];
+  if(word){
+    speak(word, 'en-US');
+  } else {
+    speak(upper, 'en-US');
+  }
 }
 
 function speak(text, lang){
@@ -1131,13 +1321,36 @@ function speak(text, lang){
   try{
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
+    // 安卓 Chrome 上 en-US 默认走 Google 在线 TTS，国内网络下静默失败；
+    // 优先尝试传入 lang；如果指定英文，再回退一次试试 en-GB（部分安卓本地有英音）
     u.lang = lang || 'en-US';
     u.rate = 0.75;
     u.pitch = 1.3;
     u.volume = 1.0;
-    const v = pickFemaleVoice();
+    const v = pickFemaleVoice(u.lang);
     if(v) u.voice = v;
+
+    // 视觉反馈：触发外部监听者（speaker 按钮可以加 .playing class）
+    document.dispatchEvent(new CustomEvent('speak:start', { detail: text }));
+
+    // 检测 1.5 秒后是否真的在播。如果没播，提示用户（安卓受限情况）
+    const startedAt = Date.now();
+    let didSpeak = false;
+    u.onstart = () => { didSpeak = true; };
+    // onend 也要 fire 给 UI
+    u.onend = () => { document.dispatchEvent(new CustomEvent('speak:end')); };
+
     window.speechSynthesis.speak(u);
+
+    setTimeout(() => {
+      const speaking = window.speechSynthesis.speaking || window.speechSynthesis.pending;
+      if(!didSpeak && !speaking){
+        // 真的没播出来（安卓 chrome 国内网络典型场景）
+        document.dispatchEvent(new CustomEvent('speak:end'));
+        // 给用户一个明确提示，但不打断游戏
+        showToast('当前设备暂不支持发音，建议用 Safari 或电脑 💡', 'error');
+      }
+    }, 1500);
   }catch(e){
     console.warn('speak failed:', e);
   }
@@ -1281,19 +1494,36 @@ function switchModule(name){
 function renderLetterGrid(){
   const grid = document.getElementById('alphabetGrid');
   if(!grid) return;
-  grid.innerHTML = LETTERS.map((L,i) =>
-    `<div class="letter-cell ${i===selectedLetterIndex?'active':''}" data-idx="${i}" role="listitem" aria-label="${L.upper} ${L.lower}">${L.upper}<br><span style="font-size:13px">${L.lower}</span></div>`
-  ).join('');
-  grid.querySelectorAll('.letter-cell').forEach(cell => {
-    cell.addEventListener('click', () => {
+  // 只在首次渲染时生成 DOM 并绑定一次事件（用事件委托，避免重复绑定）
+  if(!grid.dataset.bound){
+    grid.innerHTML = LETTERS.map((L,i) =>
+      `<div class="letter-cell" data-idx="${i}" role="listitem" aria-label="${L.upper} ${L.lower}">${L.upper}<br><span style="font-size:13px">${L.lower}</span></div>`
+    ).join('');
+    // 事件委托：一个监听器处理所有 cell 点击
+    grid.addEventListener('click', (e) => {
+      const cell = e.target.closest('.letter-cell');
+      if(!cell) return;
+      const idx = parseInt(cell.dataset.idx, 10);
+      if(Number.isNaN(idx)) return;
       playClickSound();
-      showLetter(parseInt(cell.dataset.idx, 10));
+      showLetter(idx);
     });
+    grid.dataset.bound = '1';
+  }
+  // 只更新 active 高亮，不重建 DOM
+  grid.querySelectorAll('.letter-cell').forEach((cell, i) => {
+    cell.classList.toggle('active', i === selectedLetterIndex);
   });
 }
 function showLetter(index){
   selectedLetterIndex = index;
-  renderLetterGrid();
+  // 先更新网格高亮（轻量更新）
+  const grid = document.getElementById('alphabetGrid');
+  if(grid){
+    grid.querySelectorAll('.letter-cell').forEach((cell, i) => {
+      cell.classList.toggle('active', i === selectedLetterIndex);
+    });
+  }
   const L = LETTERS[index];
   const html = `
     <div class="letter-detail">
@@ -1313,8 +1543,8 @@ function showLetter(index){
   c.innerHTML = html;
   c.querySelector('.play-letter-sound').addEventListener('click', () => {
     playClickSound();
-    speak(L.upper, 'en-US');
-    setTimeout(() => speak(L.word, 'en-US'), 700);
+    // 只读单词，让小朋友记住完整的词怎么读
+    speak(L.word, 'en-US');
   });
   c.querySelector('[data-nav="prev"]').addEventListener('click', () => {
     playClickSound();
@@ -1530,7 +1760,7 @@ function renderLetterFind(grid){
         playCorrectSound();
         addStars(1);
         showToast('找到了！+1⭐', 'success');
-        speak(letterFindTarget, 'en-US');
+        speakLetter(letterFindTarget);
         setTimeout(() => startLetterFind(), 1500);
       } else {
         div.classList.add('wrong');
@@ -1548,39 +1778,70 @@ function renderLetterFind(grid){
    ========================================================== */
 function renderWordThemeTabs(){
   const row = document.getElementById('wordThemeTabs');
-  row.innerHTML = Object.keys(WORD_THEMES).map(k =>
-    `<button class="tab-pill orange ${k===currentWordTheme?'active':''}" data-theme="${k}" role="tab">${WORD_THEMES[k].name}</button>`
-  ).join('');
-  row.querySelectorAll('.tab-pill').forEach(b => {
-    b.addEventListener('click', () => {
+  if(!row) return;
+  // 首次渲染：构建 DOM + 事件委托（永不重复绑定）
+  if(!row.dataset.bound){
+    row.innerHTML = Object.keys(WORD_THEMES).map(k =>
+      `<button class="tab-pill orange" data-theme="${k}" role="tab">${WORD_THEMES[k].name}</button>`
+    ).join('');
+    row.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-theme]');
+      if(!btn) return;
       playClickSound();
-      currentWordTheme = b.dataset.theme;
+      currentWordTheme = btn.dataset.theme;
       currentWordIndex = 0;
-      renderWordThemeTabs();
-      renderWordGrid();
+      // 只更新 active 高亮
+      row.querySelectorAll('[data-theme]').forEach(b => {
+        b.classList.toggle('active', b.dataset.theme === currentWordTheme);
+      });
       document.getElementById('wordDetailContainer').innerHTML = '';
+      renderWordGrid();
       // re-init current sub-game
       if(currentWordGameType === 'match') startWordMatch();
       else if(currentWordGameType === 'spell') initSpellGame();
       else if(currentWordGameType === 'listen') initWordListenGame();
     });
+    row.dataset.bound = '1';
+  }
+  // 更新高亮
+  row.querySelectorAll('[data-theme]').forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === currentWordTheme);
   });
 }
 function renderWordGrid(){
   const grid = document.getElementById('wordGrid');
-  const words = WORD_THEMES[currentWordTheme].words;
-  grid.innerHTML = words.map((w,i) =>
-    `<div class="word-card ${i===currentWordIndex?'active':''}" data-widx="${i}" role="listitem">
-      <span class="emoji" aria-hidden="true">${w.emoji}</span>
-      <div class="en">${w.en}</div>
-      <div class="cn">${w.cn}</div>
-    </div>`
-  ).join('');
-  grid.querySelectorAll('.word-card').forEach(c => {
-    c.addEventListener('click', () => {
+  if(!grid) return;
+  // 首次渲染：构建 DOM + 事件委托
+  if(!grid.dataset.bound){
+    const words = WORD_THEMES[currentWordTheme].words;
+    grid.innerHTML = words.map((w,i) =>
+      `<div class="word-card" data-widx="${i}" role="listitem">
+        <span class="emoji" aria-hidden="true">${w.emoji}</span>
+        <div class="en">${w.en}</div>
+        <div class="cn">${w.cn}</div>
+      </div>`
+    ).join('');
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-widx]');
+      if(!card) return;
       playClickSound();
-      showWordCard(parseInt(c.dataset.widx, 10));
+      showWordCard(parseInt(card.dataset.widx, 10));
     });
+    grid.dataset.bound = '1';
+  } else {
+    // 主题切换：重建单词卡
+    const words = WORD_THEMES[currentWordTheme].words;
+    grid.innerHTML = words.map((w,i) =>
+      `<div class="word-card ${i===currentWordIndex?'active':''}" data-widx="${i}" role="listitem">
+        <span class="emoji" aria-hidden="true">${w.emoji}</span>
+        <div class="en">${w.en}</div>
+        <div class="cn">${w.cn}</div>
+      </div>`
+    ).join('');
+  }
+  // 更新 active 高亮
+  grid.querySelectorAll('[data-widx]').forEach(c => {
+    c.classList.toggle('active', parseInt(c.dataset.widx, 10) === currentWordIndex);
   });
 }
 function showWordCard(i){
@@ -1710,7 +1971,7 @@ function handleWordMatchClick(idx){
 function initSpellGame(){
   const w = pickRandom(WORD_THEMES[currentWordTheme].words);
   spellCurrentWord = w;
-  spellInputLetters = [];
+  spellInputLetters = [];   // 只存字母（不含空格）
   spellUsedKeys = [];
   renderSpell();
   // speak the word as a hint after a short delay
@@ -1718,18 +1979,30 @@ function initSpellGame(){
 }
 function renderSpell(){
   const w = spellCurrentWord;
-  const letters = w.en.toLowerCase().split('');
-  // count max usage per letter
+  const rawTokens = w.en.toLowerCase().split(/\s+/).filter(Boolean);
+  // tokens: ["thank","you"]; 字母槽位按顺序展开，空格作为预填槽位
+  const slots = []; // [{type:'letter'|'space'}]
+  rawTokens.forEach((tok, ti) => {
+    tok.split('').forEach(c => slots.push({ type: 'letter', ch: c }));
+    if(ti < rawTokens.length - 1) slots.push({ type: 'space' });
+  });
+
+  // 字母统计：每个字母在 word 中出现次数（用于键盘 disabled 状态）
   const maxCount = {};
-  letters.forEach(c => { maxCount[c] = (maxCount[c] || 0) + 1; });
+  rawTokens.forEach(t => t.split('').forEach(c => { maxCount[c] = (maxCount[c]||0)+1; }));
   const usedCount = {};
-  spellInputLetters.forEach(c => { usedCount[c] = (usedCount[c] || 0) + 1; });
+  spellInputLetters.forEach(c => { usedCount[c] = (usedCount[c]||0)+1; });
 
-  const area = document.getElementById('wordGameArea');
-  const slotsHtml = spellInputLetters.map((c,i) =>
-    `<div class="spell-slot filled">${c}</div>`
-  ).join('') + Array(letters.length - spellInputLetters.length).fill('<div class="spell-slot"></div>').join('');
+  // 把 spellInputLetters 映射回 slot：填到所有 letter-slot 上（顺序）
+  let letterCursor = 0;
+  const slotsHtml = slots.map((s) => {
+    if(s.type === 'space') return `<div class="spell-slot spell-space">·</div>`;
+    const filled = letterCursor < spellInputLetters.length ? spellInputLetters[letterCursor] : '';
+    letterCursor += 1;
+    return `<div class="spell-slot ${filled?'filled':''}">${filled||''}</div>`;
+  }).join('');
 
+  // 字母按键
   const keys = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const keysHtml = keys.map(k => {
     const used = usedCount[k] || 0;
@@ -1738,45 +2011,76 @@ function renderSpell(){
     return `<button class="spell-key" data-k="${k}" ${disabled?'disabled':''}>${k}</button>`;
   }).join('');
 
+  const area = document.getElementById('wordGameArea');
   area.innerHTML = `
     <div class="spell-display">
       <span class="emoji" aria-hidden="true">${w.emoji}</span>
       <div class="cn">${w.cn}</div>
+      <button class="icon-btn spell-hint" aria-label="再听一遍" style="margin-top:8px;width:36px;height:36px;font-size:16px">🔊</button>
     </div>
     <div class="spell-slots">${slotsHtml}</div>
-    <div class="spell-keyboard">${keysHtml}<button class="spell-key spell-clear" data-clear>清除</button></div>`;
+    <div class="spell-keyboard">${keysHtml}</div>
+    <div class="spell-toolbar">
+      <button class="spell-key spell-action" data-backspace aria-label="退一格"><span class="icon">⌫</span><span class="lbl">退格</span></button>
+      <button class="spell-key spell-action" data-clear aria-label="清除全部"><span class="icon">🗑️</span><span class="lbl">清除</span></button>
+      <button class="spell-key spell-action spell-skip" data-skip aria-label="下一题"><span class="lbl">下一题</span><span class="icon">⏭</span></button>
+    </div>
+    <div style="text-align:center;margin-top:8px;font-size:12px;color:#888">小提示：<b>⌫</b> 退一格 · <b>清除</b> 重填 · <b>下一题</b> 跳过</div>`;
 
   area.querySelectorAll('.spell-key[data-k]').forEach(k => {
     k.addEventListener('click', () => {
       playClickSound();
-      const c = k.dataset.k;
-      handleSpellKey(c);
+      handleSpellKey(k.dataset.k);
     });
+  });
+  area.querySelector('[data-backspace]').addEventListener('click', () => {
+    playClickSound();
+    handleSpellBackspace();
   });
   area.querySelector('[data-clear]').addEventListener('click', () => {
     playClickSound();
     clearSpellInput();
   });
+  area.querySelector('[data-skip]').addEventListener('click', () => {
+    playClickSound();
+    initSpellGame();
+  });
+  area.querySelector('.spell-hint').addEventListener('click', () => speak(w.en, 'en-US'));
 }
 function handleSpellKey(ch){
-  if(spellInputLetters.length >= spellCurrentWord.en.length) return;
+  // letter count in target = sum of letters (excluding spaces)
+  const rawTokens = spellCurrentWord.en.toLowerCase().split(/\s+/).filter(Boolean);
+  const letterTotal = rawTokens.reduce((acc, t) => acc + t.length, 0);
+  if(spellInputLetters.length >= letterTotal) return;
   spellInputLetters.push(ch);
   renderSpell();
   // check if complete
-  if(spellInputLetters.length === spellCurrentWord.en.length){
+  if(spellInputLetters.length === letterTotal){
     const got = spellInputLetters.join('');
-    if(got === spellCurrentWord.en.toLowerCase()){
+    const expected = rawTokens.join('').toLowerCase();
+    if(got === expected){
       playCorrectSound();
       addStars(2);
       showToast('拼写正确！+2⭐', 'success');
       speak(spellCurrentWord.en, 'en-US');
       setTimeout(() => initSpellGame(), 1800);
     } else {
+      // 答错：清空、重读单词、不扣星（鼓励继续）
       playWrongSound();
       showToast('再试试看～', 'error');
       speak('Try again!', 'en-US');
+      setTimeout(() => {
+        clearSpellInput();
+        // 重读正确单词作为提示
+        setTimeout(() => speak(spellCurrentWord.en, 'en-US'), 300);
+      }, 700);
     }
   }
+}
+function handleSpellBackspace(){
+  if(spellInputLetters.length === 0) return;
+  spellInputLetters.pop();
+  renderSpell();
 }
 function clearSpellInput(){
   spellInputLetters = [];
@@ -1830,24 +2134,38 @@ function renderWordListenQuestion(target, options){
    ========================================================== */
 function renderSentenceSceneTabs(){
   const row = document.getElementById('sentenceSceneTabs');
-  row.innerHTML = Object.keys(SENTENCE_SCENES).map(k =>
-    `<button class="tab-pill blue ${k===currentSentenceScene?'active':''}" data-scene="${k}" role="tab">${SENTENCE_SCENES[k].name}</button>`
-  ).join('');
-  row.querySelectorAll('.tab-pill').forEach(b => {
-    b.addEventListener('click', () => {
+  if(!row) return;
+  // 首次渲染：构建 DOM + 事件委托（永不重复绑定）
+  if(!row.dataset.bound){
+    row.innerHTML = Object.keys(SENTENCE_SCENES).map(k =>
+      `<button class="tab-pill blue" data-scene="${k}" role="tab">${SENTENCE_SCENES[k].name}</button>`
+    ).join('');
+    row.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-scene]');
+      if(!btn) return;
       playClickSound();
-      currentSentenceScene = b.dataset.scene;
-      renderSentenceSceneTabs();
+      currentSentenceScene = btn.dataset.scene;
+      // 只更新高亮
+      row.querySelectorAll('[data-scene]').forEach(b => {
+        b.classList.toggle('active', b.dataset.scene === currentSentenceScene);
+      });
       renderSentenceList();
       // re-init current game
       if(currentSentenceGameType === 'order') initSentenceOrder();
       else if(currentSentenceGameType === 'quiz') initSentenceQuiz();
       else if(currentSentenceGameType === 'listen') initSentenceListenGame();
     });
+    row.dataset.bound = '1';
+  }
+  // 更新高亮
+  row.querySelectorAll('[data-scene]').forEach(b => {
+    b.classList.toggle('active', b.dataset.scene === currentSentenceScene);
   });
 }
 function renderSentenceList(){
   const list = document.getElementById('sentenceList');
+  if(!list) return;
+  // 每次场景切换都重建句子列表（数据需要更新），但用事件委托而不是循环绑
   const sents = SENTENCE_SCENES[currentSentenceScene].sentences;
   list.innerHTML = sents.map(s => `
     <div class="sentence-item">
@@ -1857,12 +2175,21 @@ function renderSentenceList(){
       </div>
       <button class="icon-btn speak-sent" aria-label="朗读 ${s.en}">🔊</button>
     </div>`).join('');
-  list.querySelectorAll('.speak-sent').forEach((b, i) => {
-    b.addEventListener('click', () => {
+  // 只在 list 上挂一个委托监听（如果还没挂）
+  if(!list.dataset.bound){
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('.speak-sent');
+      if(!btn) return;
+      const items = list.querySelectorAll('.sentence-item');
+      const idx = Array.prototype.indexOf.call(items, btn.closest('.sentence-item'));
+      if(idx === -1) return;
+      const curSents = SENTENCE_SCENES[currentSentenceScene].sentences;
+      if(!curSents[idx]) return;
       playClickSound();
-      speak(sents[i].en, 'en-US');
+      speak(curSents[idx].en, 'en-US');
     });
-  });
+    list.dataset.bound = '1';
+  }
 }
 
 function switchSentenceGame(type){
@@ -1897,25 +2224,25 @@ function renderSentenceOrder(bank, correctWords){
   const area = document.getElementById('sentenceGameArea');
   area.innerHTML = `
     <div style="text-align:center;margin-bottom:10px;color:#666;font-size:14px">点击单词按正确顺序排成句子</div>
-    <div style="background:#fff;border-radius:var(--r-card);padding:14px;margin-bottom:10px;text-align:center">
+    <div style="background:#fff;border-radius:var(--r-card);padding:14px;margin-bottom:12px;text-align:center">
       <div style="font-size:14px;color:#666">中文：${sentenceOrderTarget.cn}</div>
-      <button class="icon-btn" id="replaySentOrder" style="margin-top:6px" aria-label="再听一遍">🔊</button>
+      <button class="icon-btn" id="replaySentOrder" style="margin-top:6px;width:36px;height:36px;font-size:16px" aria-label="再听一遍">🔊</button>
     </div>
-    <div class="order-slots" id="sentOrderSlots"></div>
-    <div class="order-bank" id="sentOrderBank"></div>
-    <div style="text-align:center;margin-top:12px;display:flex;gap:8px;justify-content:center">
+    <div class="word-order-slots" id="sentOrderSlots"></div>
+    <div class="word-order-bank" id="sentOrderBank"></div>
+    <div style="text-align:center;display:flex;gap:8px;justify-content:center">
       <button class="btn ghost" id="resetSentOrder">重置</button>
       <button class="btn blue" id="checkSentOrder">检查</button>
     </div>`;
   const slotsEl = document.getElementById('sentOrderSlots');
   slotsEl.innerHTML = sentenceOrderSlots.map((v,i) =>
-    `<div class="order-slot ${v?'filled':''}" data-slot="${i}">${v||''}</div>`
+    `<div class="word-order-slot ${v?'filled':''}" data-slot="${i}">${v||''}</div>`
   ).join('');
   const bankEl = document.getElementById('sentOrderBank');
   bankEl.innerHTML = bank.map((c,i) =>
-    `<button class="order-piece" data-bank="${c}" data-bi="${i}" ${sentenceOrderSlots.includes(c)?'disabled':''}>${c}</button>`
+    `<button class="word-order-piece" data-bank="${c}" data-bi="${i}" ${sentenceOrderSlots.includes(c)?'disabled':''}>${c}</button>`
   ).join('');
-  bankEl.querySelectorAll('.order-piece').forEach(b => {
+  bankEl.querySelectorAll('.word-order-piece').forEach(b => {
     b.addEventListener('click', () => {
       playClickSound();
       const word = b.dataset.bank;
@@ -1925,12 +2252,13 @@ function renderSentenceOrder(bank, correctWords){
       renderSentenceOrder(bank, correctWords);
     });
   });
-  slotsEl.querySelectorAll('.order-slot').forEach(s => {
+  slotsEl.querySelectorAll('.word-order-slot').forEach(s => {
     s.addEventListener('click', () => {
       const i = parseInt(s.dataset.slot, 10);
       if(sentenceOrderSlots[i]){
         sentenceOrderSlots[i] = null;
         renderSentenceOrder(bank, correctWords);
+        playClickSound();
       }
     });
   });
@@ -1978,11 +2306,13 @@ function renderSentenceQuiz(target, options){
     <div style="background:#fff;border-radius:var(--r-card);padding:14px;text-align:center;margin-bottom:10px">
       <div style="font-size:14px;color:#666">中文意思：</div>
       <div style="font-size:20px;font-weight:700;color:var(--c-blue-1);margin-top:4px">${target.cn}</div>
+      <button class="icon-btn" id="replayQuizHint" style="margin-top:8px;width:36px;height:36px;font-size:16px" aria-label="再听一遍正确句子">🔊</button>
     </div>
-    <div class="listen-options" id="quizOpts"></div>
+    <div class="sentence-options" id="quizOpts"></div>
     <div style="text-align:center;margin-top:12px">
       <button class="btn ghost" id="skipQuiz">下一题</button>
     </div>`;
+  area.querySelector('#replayQuizHint').addEventListener('click', () => speak(target.en, 'en-US'));
   const optsEl = document.getElementById('quizOpts');
   options.forEach(o => {
     const div = document.createElement('button');
@@ -2086,7 +2416,7 @@ function generateListenQuestion(){
     const distractors = shuffle(LETTERS.filter(L => L.upper !== target.upper)).slice(0, 3);
     const options = shuffle([target, ...distractors]);
     renderListenLetter(target, options);
-    setTimeout(() => speak(target.upper, 'en-US'), 400);
+    setTimeout(() => speakLetter(target.upper), 400);
   } else if(currentListenType === 'sentence'){
     const pool = [];
     Object.keys(SENTENCE_SCENES).forEach(k => SENTENCE_SCENES[k].sentences.forEach(s => pool.push(s)));
@@ -2144,7 +2474,7 @@ function renderListenLetter(target, options){
     <div style="text-align:center;margin-top:12px">
       <button class="btn ghost" id="listenNext">下一题</button>
     </div>`;
-  area.querySelector('#listenLetterSpeaker').addEventListener('click', () => speak(target.upper, 'en-US'));
+  area.querySelector('#listenLetterSpeaker').addEventListener('click', () => speakLetter(target.upper));
   const optsEl = document.getElementById('listenOpts');
   options.forEach(o => {
     const div = document.createElement('button');
@@ -2161,7 +2491,7 @@ function renderListenLetter(target, options){
         playCorrectSound();
         addStars(1);
         showToast('答对了！+1⭐', 'success');
-        speak(target.upper, 'en-US');
+        speakLetter(target.upper);
         setTimeout(() => generateListenQuestion(), 1500);
       } else {
         playWrongSound();
@@ -2229,52 +2559,42 @@ function startMemoryGame(theme){
   const words = shuffle(WORD_THEMES[theme].words).slice(0, 8);
   const cards = [];
   words.forEach(w => {
-    cards.push({ id: 'en_' + w.en, kind: 'en', display: w.en, match: w.cn, theme });
-    cards.push({ id: 'cn_' + w.en, kind: 'cn', display: w.cn, match: w.en, theme });
+    cards.push({ id: 'en_' + w.en, kind: 'en', display: w.en, match: w.cn, theme, matched: false });
+    cards.push({ id: 'cn_' + w.en, kind: 'cn', display: w.cn, match: w.en, theme, matched: false });
   });
   memoryCards = shuffle(cards);
   memoryFlipped = [];
   memoryMatched = 0;
   memoryTotal = 8;
   memoryLock = false;
-  renderMemory();
-  // theme picker
+  renderMemory(theme);
+}
+function renderMemory(theme){
   const area = document.getElementById('gameArea');
-  const themePicker = `
-    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
-      ${Object.keys(WORD_THEMES).filter(k => ['animals','food','body','colors'].includes(k)).map(k =>
-        `<button class="tab-pill red ${k===theme?'active':''}" data-memory-theme="${k}">${WORD_THEMES[k].name}</button>`
-      ).join('')}
-    </div>`;
-  area.insertAdjacentHTML('afterbegin', themePicker);
+  // 重建 area 整个区域（避免上次的主题选择器或残留 DOM）
+  const themeBtns = ['animals','food','body','colors'].map(k =>
+    `<button class="tab-pill red ${k===theme?'active':''}" data-memory-theme="${k}">${WORD_THEMES[k].name}</button>`
+  ).join('');
+  area.innerHTML = `
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap" id="memoryThemePicker">${themeBtns}</div>
+    <div style="text-align:center;margin-bottom:10px;color:#666;font-size:14px">翻牌找英中配对（已配对 <span id="memoryMatchedCount">0</span> / 8）</div>
+    <div class="memory-grid" id="memoryGrid"></div>`;
+  // theme picker handlers
   area.querySelectorAll('[data-memory-theme]').forEach(b => {
     b.addEventListener('click', () => {
       playClickSound();
       startMemoryGame(b.dataset.memoryTheme);
     });
   });
-}
-function renderMemory(){
-  const area = document.getElementById('gameArea');
-  // remove theme picker first card if exists
-  const oldPicker = area.querySelector('[data-memory-picker]');
-  // we built picker outside renderMemory to avoid duplication; render grid below existing picker
-  const gridWrap = area.querySelector('#memoryGridWrap') || (() => {
-    const w = document.createElement('div');
-    w.id = 'memoryGridWrap';
-    area.appendChild(w);
-    return w;
-  })();
-  gridWrap.innerHTML = `<div class="memory-grid" id="memoryGrid"></div>`;
+  // render cards
   const grid = document.getElementById('memoryGrid');
   memoryCards.forEach((c, idx) => {
     const div = document.createElement('div');
     div.className = 'memory-card';
     div.dataset.idx = idx;
+    div.setAttribute('role', 'button');
     div.setAttribute('aria-label', '未翻开的卡片');
-    div.innerHTML = `
-      <div class="face back">❓</div>
-      <div class="face front">${c.display}</div>`;
+    div.innerHTML = `<div class="card-face back">❓</div>`;
     div.addEventListener('click', () => flipMemoryCard(idx));
     grid.appendChild(div);
   });
@@ -2284,42 +2604,67 @@ function flipMemoryCard(idx){
   if(memoryFlipped.includes(idx)) return;
   if(memoryCards[idx].matched) return;
   playClickSound();
-  memoryFlipped.push(idx);
+
+  // 翻开：替换内容为正面
+  const card = memoryCards[idx];
   const el = document.querySelector(`#memoryGrid .memory-card[data-idx="${idx}"]`);
+  if(!el) return;
   el.classList.add('flipped');
+  el.innerHTML = `<div class="card-face front">${card.display}</div>`;
+
+  memoryFlipped.push(idx);
+
   if(memoryFlipped.length === 2){
     memoryLock = true;
-    const [a,b] = memoryFlipped;
+    const [a, b] = memoryFlipped;
     const ca = memoryCards[a], cb = memoryCards[b];
     const isMatch = ca.kind !== cb.kind && ca.match === cb.display;
+
     setTimeout(() => {
+      const elA = document.querySelector(`#memoryGrid .memory-card[data-idx="${a}"]`);
+      const elB = document.querySelector(`#memoryGrid .memory-card[data-idx="${b}"]`);
       if(isMatch){
         memoryCards[a].matched = true;
         memoryCards[b].matched = true;
-        el.classList.add('matched');
-        document.querySelector(`#memoryGrid .memory-card[data-idx="${a}"]`).classList.add('matched');
+        if(elA){ elA.classList.add('matched'); elA.classList.remove('flipped'); }
+        if(elB){ elB.classList.add('matched'); elB.classList.remove('flipped'); }
         memoryMatched += 1;
+        const mc = document.getElementById('memoryMatchedCount');
+        if(mc) mc.textContent = memoryMatched;
         playCorrectSound();
         addStars(1);
+        showToast('配对成功！+1⭐', 'success');
         if(memoryMatched >= memoryTotal){
           setTimeout(() => {
             showToast('全部配对完成！+5⭐', 'success');
             addStars(5);
             speak('Amazing!', 'en-US');
             showConfetti();
-            // restart after a moment
             setTimeout(() => startMemoryGame(memoryCards[0].theme), 2500);
           }, 500);
         }
       } else {
+        // 翻回：恢复背面
+        if(elA){
+          elA.classList.remove('flipped');
+          elA.classList.add('wrong-shake');
+          elA.innerHTML = `<div class="card-face back">❓</div>`;
+        }
+        if(elB){
+          elB.classList.remove('flipped');
+          elB.classList.add('wrong-shake');
+          elB.innerHTML = `<div class="card-face back">❓</div>`;
+        }
         playWrongSound();
-        document.querySelector(`#memoryGrid .memory-card[data-idx="${a}"]`).classList.remove('flipped');
-        document.querySelector(`#memoryGrid .memory-card[data-idx="${b}"]`).classList.remove('flipped');
         showToast('再翻翻看～', 'error');
+        setTimeout(() => {
+          if(elA) elA.classList.remove('wrong-shake');
+          if(elB) elB.classList.remove('wrong-shake');
+        }, 500);
       }
       memoryFlipped = [];
       memoryLock = false;
-    }, 700);
+    }, 800);
   }
 }
 
@@ -2336,6 +2681,7 @@ function startWhackGame(){
   whackTargetWord = pickRandom(WORD_THEMES[currentWordTheme].words).en;
   whackActive = true;
   renderWhack();
+  // 倒计时：每 1s 减 1
   whackTimer = setInterval(() => {
     whackTimeLeft -= 1;
     if(whackTimeLeft <= 0){
@@ -2344,20 +2690,26 @@ function startWhackGame(){
     }
     updateWhackHUD();
   }, 1000);
-  scheduleWhackSpawn();
+  // spawn 循环：第一次 600ms 后启动
+  scheduleWhackSpawn(600);
 }
 function renderWhack(){
   const area = document.getElementById('gameArea');
   let holes = '';
-  for(let i=0;i<9;i++) holes += `<div class="whack-hole" data-hole="${i}"><div class="mole"></div></div>`;
+  for(let i=0;i<9;i++){
+    holes += `<div class="whack-hole" data-hole="${i}">
+      <div class="mole"></div>
+      <div class="floater"></div>
+    </div>`;
+  }
   area.innerHTML = `
     <div class="whack-hud">
-      <div><div class="label">目标</div><div class="value" id="whackTarget">${whackTargetWord}</div></div>
+      <div><div class="label">目标</div><div class="value" id="whackTarget" style="font-size:18px">${whackTargetWord}</div></div>
       <div><div class="label">分数</div><div class="value" id="whackScore">${whackPoints}</div></div>
       <div><div class="label">时间</div><div class="value" id="whackTime">${whackTimeLeft}s</div></div>
     </div>
     <div class="whack-area">
-      <div class="whack-target-word">点击出现的：<strong>${whackTargetWord}</strong></div>
+      <div class="whack-target-word">只点出现的：<strong>${whackTargetWord}</strong>（其他不要点）</div>
       <div class="whack-grid">${holes}</div>
     </div>`;
   area.querySelectorAll('.whack-hole').forEach(h => {
@@ -2370,26 +2722,30 @@ function updateWhackHUD(){
   if(t) t.textContent = whackTimeLeft + 's';
   if(s) s.textContent = whackPoints;
 }
-function scheduleWhackSpawn(){
+function scheduleWhackSpawn(delay){
   if(!whackActive) return;
-  const delay = randInt(800, 1500);
   whackSpawnTimer = setTimeout(() => {
     if(!whackActive) return;
     spawnWhack();
-    scheduleWhackSpawn();
-  }, delay);
+    // 下一只：随机 700-1300ms 后
+    scheduleWhackSpawn(randInt(700, 1300));
+  }, delay || randInt(700, 1300));
 }
 function spawnWhack(){
   if(!whackActive) return;
-  // pick a hole
   const holes = document.querySelectorAll('.whack-hole');
   if(holes.length === 0) return;
-  const idx = randInt(0, 8);
+  // 随机选一个当前没显示的洞
+  const available = [];
+  holes.forEach((h, i) => { if(!h.classList.contains('show')) available.push(i); });
+  if(available.length === 0) return;
+  const idx = available[Math.floor(Math.random() * available.length)];
   const hole = holes[idx];
-  // pick a word: 50% target, 50% distractor
+  // 40% 概率是目标词，60% 干扰词（让游戏有点挑战但不刁难）
   let word;
-  if(Math.random() < 0.4) word = whackTargetWord;
-  else {
+  if(Math.random() < 0.4){
+    word = whackTargetWord;
+  } else {
     const pool = [];
     Object.keys(WORD_THEMES).forEach(k => WORD_THEMES[k].words.forEach(w => pool.push(w)));
     word = pickRandom(pool.filter(w => w.en !== whackTargetWord)).en;
@@ -2397,33 +2753,57 @@ function spawnWhack(){
   hole.querySelector('.mole').textContent = word;
   hole.dataset.word = word;
   hole.classList.add('show');
-  hole.classList.remove('correct-hit','wrong-hit');
+  hole.classList.remove('target-hit','shake');
+  // 自动收回：1200-1500ms（让节奏稍快）
+  const lifeMs = randInt(1200, 1500);
   setTimeout(() => {
     if(!whackActive) return;
-    hole.classList.remove('show');
-    hole.dataset.word = '';
-  }, 1500);
+    if(hole.classList.contains('show')){
+      hole.classList.remove('show');
+      hole.dataset.word = '';
+    }
+  }, lifeMs);
 }
 function handleWhackClick(holeIdx){
   if(!whackActive) return;
-  playClickSound();
   const holes = document.querySelectorAll('.whack-hole');
   const hole = holes[holeIdx];
-  if(!hole || !hole.classList.contains('show')) return;
+  if(!hole) return;
+  // 点的是空地（没地鼠）→ 抖动反馈
+  if(!hole.classList.contains('show')){
+    playClickSound();
+    hole.classList.add('shake');
+    setTimeout(() => hole.classList.remove('shake'), 400);
+    return;
+  }
+  playClickSound();
   const word = hole.dataset.word;
-  if(word === whackTargetWord){
+  const isTarget = (word === whackTargetWord);
+  // 浮字反馈
+  const floater = hole.querySelector('.floater');
+  if(isTarget){
     whackPoints += 10;
-    hole.classList.add('correct-hit');
+    hole.classList.add('target-hit');
+    floater.textContent = '+10';
+    floater.className = 'floater plus show';
     playCorrectSound();
     addStars(1);
+    showToast(`+10 分！`, 'success');
   } else {
     whackPoints = Math.max(0, whackPoints - 5);
-    hole.classList.add('wrong-hit');
+    floater.textContent = '-5';
+    floater.className = 'floater minus show';
     playWrongSound();
+    showToast(`点错了！-5`, 'error');
   }
+  // 立即收回地鼠
   hole.classList.remove('show');
   hole.dataset.word = '';
   updateWhackHUD();
+  // 浮字 900ms 后清掉
+  setTimeout(() => {
+    if(floater) floater.className = 'floater';
+  }, 900);
 }
 function endWhackGame(){
   clearWhackTimers();
