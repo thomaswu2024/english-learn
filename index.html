@@ -3078,8 +3078,19 @@ function init(){
   document.getElementById('gameArea').dataset.init = '1';
 
   // tap anywhere to lazily init audio context (mobile autoplay policy)
+  // v1.2.9 起:iPad/iOS Safari 上 speechSynthesis 同样需要"用户首次手势"激活,
+  // 否则首次 speak() 静默丢音(老 v1.2.8 失败的根因)。这里在首次手势里
+  // 同时空跑一次 utterance 解锁 TTS 引擎,volume=0 不出声音不扰人。
   const unlockAudio = () => {
     _getAudioCtx();
+    try {
+      if ('speechSynthesis' in window) {
+        const probe = new SpeechSynthesisUtterance('​'); // zero-width space
+        probe.volume = 0;
+        probe.lang = 'en-US';
+        window.speechSynthesis.speak(probe);
+      }
+    } catch (_) {}
     document.removeEventListener('touchstart', unlockAudio);
     document.removeEventListener('click', unlockAudio);
   };
