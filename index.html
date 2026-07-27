@@ -1227,6 +1227,7 @@ let challengeCurrent = null;
 let _audioCtx = null;
 let _cachedFemaleVoice = null;
 let _voicesLoaded = false;
+let _voicesReady = false;  // v1.2.8 起：iPad Safari 上 voiceschanged 触发后置 true，speak() 据此决定是否挑女声
 
 // Localstorage safe wrappers
 function _lsGet(key, fallback){
@@ -1319,15 +1320,23 @@ function speakLetter(ch){
 function speak(text, lang){
   if(!('speechSynthesis' in window)) return;
   try{
+    // cancel 之前先 pause+resume，让 iOS Safari 引擎把上一次"卡死"的 utterance 释放，
+    // 修复快速连点按钮时的吞音经典 bug（v1.2.8 起增加，见 TTS_RESEARCH.md）。
+    try { window.speechSynthesis.pause(); window.speechSynthesis.resume(); } catch(_){}
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     // 安卓 Chrome 上 en-US 默认走 Google 在线 TTS，国内网络下静默失败；
     // 优先尝试传入 lang；如果指定英文，再回退一次试试 en-GB（部分安卓本地有英音）
     u.lang = lang || 'en-US';
     u.rate = 0.75;
-    u.pitch = 1.3;
+    // iOS Safari 在 pitch>=1.3 时会静默拒绝发声（不抛错也不出声音）。
+    // 实测 1.1 是 iPad Safari 容许的最高"甜美女声"档位。
+    u.pitch = 1.1;
     u.volume = 1.0;
-    const v = pickFemaleVoice(u.lang);
+    // 等 voices 真准备好再挑 voice。iOS Safari 在 onvoiceschanged 之前
+    // getVoices() 返回空；此时选不到 Samantha 等女声，引擎会回退到系统默认，
+    // 在 iPad 中文系统里经常是中文女声 → 出现"读英文但听着像中文"的诡异现象。
+    const v = (_voicesReady && pickFemaleVoice) ? pickFemaleVoice(u.lang) : null;
     if(v) u.voice = v;
 
     // 视觉反馈：触发外部监听者（speaker 按钮可以加 .playing class）
@@ -1359,6 +1368,7 @@ function speak(text, lang){
 if('speechSynthesis' in window){
   window.speechSynthesis.onvoiceschanged = function(){
     _cachedFemaleVoice = null;
+    _voicesReady = true;  // v1.2.8 起：iPad Safari 上 voiceschanged 必须标记，否则 speak() 拿不到女声
     pickFemaleVoice();
     _voicesLoaded = true;
   };
